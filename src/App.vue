@@ -1,28 +1,57 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="section" v-for="(item, i) in sections" :key="i">
+      <Title :title="item.title"/>
+    </div>
+    <Logo class="logo"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Logo from './components/Logo.vue'
+import Title from './components/Title.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Logo,
+    Title
+  },
+  data() {
+    return {
+      sections: [
+        {
+          title: 'BASICS'
+        },
+        {
+          title: 'TOP 5'
+        }
+      ]
+    }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './main.scss';
+body {
+  margin: 0;
+  overscroll-behavior: none;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background: $bg;
+  height: 400vh;
+}
+.logo {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+}
+.section {
+  position: relative;
 }
 </style>

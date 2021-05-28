@@ -1,0 +1,27 @@
+@font-face {
+  font-family: Conglomerate;
+  src: url("./assets/conglomerate-book.ttf");
+  src: url("./assets/conglomerate-book.woff")
+    url("./assets/conglomerate-book.woff2");
+}
+
+$bg: #141414;
+$arial: Arial, Helvetica, sans-serif;
+$cong: Conglomerate;
+$w: white;
+$transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
+
+p {
+  font-family: $arial;
+  margin: 0;
+  color: $w;
+  font-size: 10;
+}
+h1,
+h2,
+h3,
+h4 {
+  color: $w;
+  font-family: $cong;
+  margin: 0;
+}
