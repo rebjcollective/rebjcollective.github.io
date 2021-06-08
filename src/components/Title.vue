@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <h2 ref="title" v-if="word.length" :style="`font-size: ${fs(word.length)}px;`">
+  <div class="title">
+      <h2 ref="title" v-if="word.length && show" :style="`font-size: ${fs(word.length)}px;`">
           <transition v-for="(item, i) in word" :key="i" appear name="title">
               <span class="box" :style="`display: inline-block; transition-delay:${i * .05}s;`">
                 <span :style="`transform: translateY(${i*8}%); display: inline-block;`">{{item}}</span>
@@ -19,6 +19,10 @@ export default {
     title: {
         type: String,
         default: "String"
+    },
+    show: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -26,7 +30,7 @@ export default {
         this.word = e.split("");
       },
       fs(wordLength) {
-        console.log(400, window.innerWidth, wordLength, window.innerWidth / wordLength);
+        // console.log(400, window.innerWidth, wordLength, window.innerWidth / wordLength);
         //font size, window size, window size / characters.
         //fs = (window size / characters) * 1.6;
         // 1.6
@@ -48,7 +52,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 
-$transition: all 2000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
+$transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
 h2 {
     overflow: hidden;
     position: relative;
@@ -66,5 +70,8 @@ h2 {
 .title-enter {
     transform: translateY(200vh);
     transition: $transition;
+}
+.title {
+  height: 35vw;
 }
 </style>
