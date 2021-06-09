@@ -2,18 +2,28 @@
   <div class="productcards" ref="pc">
     <div class="title-wrap" ref="title">
         <div class="title-inner">
-        <Title :title="title" :show="showTitle"/>
+        <Title :title="title" :idx="idx + 1" :show="showTitle"/>
         </div>
       </div>
       <div class="row" ref="rect">
-        <transition  v-for="(item, i) in 5" :key="i">
-          <div class="rect-outer" :style="`margin-top: ${i * 40}px`">
-            <transition name="rect" appear>
-             <div class="rect" v-show="showRect" :style="`transition-delay: ${i * .25}s`"/>
-            </transition>
+        <transition v-for="(item, i) in 5" :key="i">
+          <div class="rect-container">
+            <div class="rect-outer" :style="`margin-top: ${i * 40}px`">
+              <transition name="rect" appear>
+              <div class="rect" v-show="showRect" :style="`transition-delay: ${i * .25}s`"/>
+              </transition>
+            </div>
+                <div class="info">
+                  <transition name="rect" appear>
+                      <div class="info-inner" v-show="showRect" :style="`transition-delay: ${i * .35}s`">
+                        <p>Soft cotton tee, embroidered with tiger graphic and finished.</p>
+                        <p class="price">$40</p>
+                      </div>
+                  </transition>
+                </div>
+
           </div>
         </transition>
-
     </div>
   </div>
 </template>
@@ -37,6 +47,7 @@ export default {
     }
   },
   props: {
+    idx: Number,
     scrollPos: Number,
     title: {
       type: String,
@@ -77,9 +88,12 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
     margin-top: -30vh;
     flex-wrap: wrap;
 }
-.rect-outer {
+.rect-container {
     display: inline-block;
     min-width: calc(33% - 2em);
+}
+.rect-outer {
+    
     height: 60vh;
     margin: 0 1em;
     overflow: hidden;
@@ -111,5 +125,22 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
   position: relative;
   height: 35vw;
   text-align: center;
+}
+.info {
+  color: white;
+  max-width: calc(33vw - 2.5em);
+  overflow: hidden;
+  p {
+    font-size: 10px;
+    text-transform: uppercase;
+    width: calc(50% - 4em);
+    text-align: left;
+    margin: 1.5em;
+    display: inline-block;
+  }
+  .price {
+    text-align: right;
+    font-size: 15px;
+  }
 }
 </style>

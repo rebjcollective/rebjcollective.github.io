@@ -4,7 +4,7 @@
       <div class="view" ref="view">
       <Intro :scrollPos="scrollPos"/>
       <div class="section" v-for="(item, i) in sections" :key="i">
-        <ProductCards :scrollPos="scrollPos" :title="item.title"/>
+        <ProductCards :scrollPos="scrollPos" :idx="i" :title="item.title"/>
         </div>
         <Logo class="logo"/>
       </div>
@@ -89,5 +89,9 @@ body {
 }
 .section {
   position: relative;
+}
+.view {
+  padding-bottom: 25vh;
+
 }
 </style>

@@ -1,6 +1,12 @@
 <template>
   <div class="title">
-      <h2 ref="title" v-if="word.length && show" :style="`font-size: ${fs(word.length)}px;`">
+    <div class="subtitle">
+      <h3>
+        <p class="idx">{{idx}}</p>
+        DARE TO MAKE A STATEMENT. BELIEVE IN YOURSELF.
+        </h3>
+      </div>
+      <h2 class="head" ref="title" v-if="word.length && show" :style="`font-size: ${fs(word.length)}px;`">
           <transition v-for="(item, i) in word" :key="i" appear name="title">
               <span class="box" :style="`display: inline-block; transition-delay:${i * .05}s;`">
                 <span :style="`transform: translateY(${i*8}%); display: inline-block;`">{{item}}</span>
@@ -16,6 +22,7 @@ export default {
   watch: {
   },
   props: {
+    idx: Number,
     title: {
         type: String,
         default: "String"
@@ -58,6 +65,13 @@ h2 {
     position: relative;
     white-space: nowrap;
     height: 35vw;
+    font-weight: 100;
+}
+.idx {
+  position: absolute;
+  left: 0;
+  transform: translateX(-100%);
+  top: -100%;
 }
 .title-enter-active {
     transition: $transition;
@@ -73,5 +87,20 @@ h2 {
 }
 .title {
   height: 35vw;
+  width: 90vw;
+}
+.subtitle {
+  color: white;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 200px;
+  text-align: left;
+  h3 {
+    font-family: Arial;
+    font-weight: 100;
+    font-size: 10px;
+    position: relative;
+  }
 }
 </style>
