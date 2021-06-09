@@ -60,8 +60,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .intro {
-    height: 100vh;
+    height: 80vh;
     position: relative;
+    width: 80vw;
+    top: 10vh;
+    left: 10vw;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.29); 
+box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.29);
+margin-bottom: 25vh;
 }
 .line {
   border-left: 1px solid white;

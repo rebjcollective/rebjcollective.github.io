@@ -6,9 +6,10 @@
       <div class="section" v-for="(item, i) in sections" :key="i">
         <ProductCards :scrollPos="scrollPos" :idx="i" :title="item.title"/>
         </div>
-        <Logo class="logo"/>
       </div>
     </div>
+    <Logo class="logo"/>
+
   </div>
 </template>
 
@@ -43,7 +44,7 @@ export default {
           this.$refs.view.style="height: 100%";
           this.scroll.listen();
 
-        } else {
+        } else if (this.scroll.pos <= window.innerHeight / 6) {
           this.$refs.view.style="height: 100vh";
           this.scroll.deafen();
         }
@@ -86,6 +87,7 @@ body {
   transform: translateX(-50%);
   top: 0;
   z-index: 100;
+  mix-blend-mode: difference;
 }
 .section {
   position: relative;

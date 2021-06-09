@@ -10,7 +10,9 @@
           <div class="rect-container">
             <div class="rect-outer" :style="`margin-top: ${i * 40}px`">
               <transition name="rect" appear>
-              <div class="rect" v-show="showRect" :style="`transition-delay: ${i * .25}s`"/>
+              <div class="rect" v-show="showRect" :style="`transition-delay: ${i * .25}s`">
+                <div class="image"/>
+                </div>
               </transition>
             </div>
                 <div class="info">
@@ -41,7 +43,6 @@ export default {
         this.showTitle = true;
       }
       if (e >= this.rectPos) {
-        console.log(this.rectPos);
         this.showRect = true;
       }
     }
@@ -97,16 +98,29 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
     height: 60vh;
     margin: 0 1em;
     overflow: hidden;
+    &:hover {
+      .image {
+        transform: scale(1.2);
+        transition: transform 1s ease;
+        transform-origin: center;
+      }
+    }
 }
 
 .rect {
+    height: 100%;
+}
+.image {
     background: url("../assets/test.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    transform: scale(1);
+    transition: transform 1s ease;
+    width: 100%;
+    transform-origin: center;
     height: 100%;
 }
-
 .rect-enter-active, .rect-enter {
     transition: $transition;
     transform: translateY(150%);
@@ -128,7 +142,7 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
 }
 .info {
   color: white;
-  max-width: calc(33vw - 2.5em);
+  max-width: calc(33vw - 2.75em);
   overflow: hidden;
   p {
     font-size: 10px;
