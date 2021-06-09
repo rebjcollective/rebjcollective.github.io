@@ -8,22 +8,23 @@
       <div class="row" ref="rect">
         <transition v-for="(item, i) in itemcount" :key="i">
           <div class="rect-container">
-            <div class="rect-outer" :style="`margin-top: ${40 * dir(i)}px`">
+            <div class="rect-outer" :ref="`rect-outer${i}`" :style="`margin-top: ${40 * dir(i)}px`">
               <transition name="rect" appear>
-              <div class="rect" v-show="showRect" :style="`transition-delay: ${i * .25}s`">
+              <div class="rect" :ref="`rect${i}`">
+                <!-- v-show="showRect" -->
+                <!-- :style="`transition-delay: ${i * .25}s`" -->
                 <div class="image"/>
                 </div>
               </transition>
             </div>
                 <div class="info">
                   <transition name="rect" appear>
-                      <div class="info-inner" v-show="showRect" :style="`transition-delay: ${i * .35}s`">
+                      <div class="info-inner" :ref="`info${i}`">
                         <p>Soft cotton tee, embroidered with tiger graphic and finished.</p>
                         <p class="price">$40</p>
                       </div>
                   </transition>
                 </div>
-
           </div>
         </transition>
     </div>
@@ -42,8 +43,13 @@ export default {
       if (e >= this.titlepos) {
         this.showTitle = true;
       }
-      if (e >= this.rectPos) {
-        this.showRect = true;
+      // if (e >= this.rectPos) {
+      //   this.showRect = true;
+      // }
+      if (e >= this.pos[this.counter]) {
+        this.$refs[`rect${this.counter}`][0].className += ` rect-show`;
+        this.$refs[`info${this.counter}`][0].className += ` info-show`;
+        this.counter += 1;
       }
     }
   },
@@ -71,13 +77,19 @@ export default {
       titlepos: null,
       showRect: false,
       rectPos: null,
-      itemcount: 5
+      itemcount: 5,
+      pos: [],
+      counter: 0
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.titlepos = (this.$refs.title.getBoundingClientRect().top + this.$refs.title.getBoundingClientRect().bottom) / 2;  
+      this.titlepos = this.$refs.title.getBoundingClientRect().top - (window.innerHeight); 
       this.rectPos = (this.$refs.rect.getBoundingClientRect().top + this.$refs.rect.getBoundingClientRect().bottom) / 2;  
+          for (let i = 0; i < this.itemcount; i++) {
+            this.pos.push(this.$refs[`rect-outer${i}`][0].getBoundingClientRect().y - this.$refs[`rect-outer${i}`][0].getBoundingClientRect().height);
+          }
+
     })
   }
 }
@@ -115,8 +127,14 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
     }
 }
 
-.rect {
+.rect, .info-inner {
     height: 100%;
+    transform: translateY(150%);
+}
+.info-show {
+  transition: transform 1s ease;
+  transition-delay: 1s;
+  transform: translateY(0%);
 }
 .image {
     background: url("../assets/test.jpg");
@@ -133,7 +151,7 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
     transition: $transition;
     transform: translateY(150%);
 }
-.rect-enter-to {
+.rect-enter-to, .rect-show {
     transition: $transition;
     transform: translateY(0%);
 }

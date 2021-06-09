@@ -6,13 +6,20 @@
         DARE TO MAKE A STATEMENT. BELIEVE IN YOURSELF.
         </h3>
       </div>
-      <h2 class="head" ref="title" v-if="word.length && show" :style="`font-size: ${fs(word.length)}px;`">
-          <transition v-for="(item, i) in word" :key="i" appear name="title">
-              <span class="box" :style="`display: inline-block; transition-delay:${i * .05}s;`">
-                <span :style="`transform: translateY(${i*8 * dir(idx)}%); display: inline-block;`">{{item}}</span>
-              </span>
-          </transition>
-    </h2>
+      <h2 class="head real" ref="title" v-if="word.length && show" :style="`font-size: ${fs(word.length)}px;`">
+        <transition v-for="(item, i) in word" :key="i" appear name="title">
+          <span class="box" :style="`display: inline-block; transition-delay:${i * .05}s;`">
+            <span :style="`transform: translateY(${i*8 * dir(idx)}%); display: inline-block;`">{{item}}</span>
+          </span>
+        </transition>
+      </h2>
+      <h2 class="head ghost" ref="title" :style="`font-size: ${fs(word.length)}px;`">
+        <transition v-for="(item, i) in word" :key="i" appear name="title">
+          <span class="box" :style="`display: inline-block; transition-delay:${i * .05}s;`">
+            <span :style="`transform: translateY(${i*8 * dir(idx)}%); display: inline-block;`">{{item}}</span>
+          </span>
+        </transition>
+      </h2>
   </div>
 </template>
 
@@ -121,5 +128,13 @@ h2 {
     font-size: 10px;
     position: relative;
   }
+}
+.ghost {
+  opacity: 0;
+}
+.real {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

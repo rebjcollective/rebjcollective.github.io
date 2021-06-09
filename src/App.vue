@@ -4,7 +4,7 @@
       <div class="view" ref="view">
       <Intro :scrollPos="scrollPos"/>
       <div class="section" v-for="(item, i) in sections" :key="i">
-        <ProductCards :scrollPos="scrollPos" :idx="i" :title="item.title"/>
+        <ProductCards :scrollPos="scroll ? scroll.pos : 0" :idx="i" :title="item.title"/>
         </div>
       </div>
     </div>
@@ -27,7 +27,12 @@ export default {
   },
   mounted() {
     this.initScroll();
-    this.scroll = new Scrolly(this.$refs.app);
+    this.$nextTick(() => {
+      this.$nextTick(() => {
+        this.scroll = new Scrolly(this.$refs.app);
+      })
+    })
+    
   },
   methods: {
     initScroll() {
@@ -108,7 +113,7 @@ body {
 .section {
   position: relative;
 }
-.view {
-  padding-bottom: 100vh;
-}
+// .view {
+//   padding-bottom: 100vh;
+// }
 </style>
