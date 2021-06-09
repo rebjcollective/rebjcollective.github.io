@@ -8,8 +8,7 @@
         </div>
       </div>
     </div>
-    <Logo class="logo"/>
-
+    <Logo class="logo" ref="logo"/>
   </div>
 </template>
 
@@ -42,9 +41,18 @@ export default {
       // console.log(this.scrollPos);
         if (this.scrollPos >= window.innerHeight) {
           this.$refs.view.style="height: 100%";
+          // this.$refs.logo.$el.style = `
+          //   width: 80px;
+          //   margin-top: 20px;
+          //   transform: translateX(-50%) translateY(0);
+          //   transition: margin-top 1s ease, width 1s ease;
+          // `;
           this.scroll.listen();
 
         } else if (this.scroll.pos <= window.innerHeight / 6) {
+          // this.$refs.logo.$el.style = `
+          //   width: 500px;
+          // `;
           this.$refs.view.style="height: 100vh";
           this.scroll.deafen();
         }
@@ -57,7 +65,7 @@ export default {
           title: "BASICS"
         },
         {
-          title: "COOL"
+          title: "FLASH.SALE"
         }
       ],
       scrollPos: 0,
@@ -80,20 +88,27 @@ body {
   background: $bg;
   height: 100vh;
   overflow: hidden;
+  background-image: url('./assets/Gritty.png')
 }
 .logo {
   position: fixed;
   left: 50%;
+  // transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%);
+
+  // margin-top: 25vh;
+  margin-top: 20px;
   top: 0;
   z-index: 100;
   mix-blend-mode: difference;
+  // width: 500px;
+  width: 80px;
+  transition: margin-top 1s ease, width 1s ease;
 }
 .section {
   position: relative;
 }
 .view {
-  padding-bottom: 25vh;
-
+  padding-bottom: 100vh;
 }
 </style>

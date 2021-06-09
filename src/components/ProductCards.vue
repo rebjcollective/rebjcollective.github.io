@@ -1,14 +1,14 @@
 <template>
   <div class="productcards" ref="pc">
     <div class="title-wrap" ref="title">
-        <div class="title-inner">
+        <div class="title-inner" :style="`${(idx % 2 === 0) ? `padding-bottom: 20vh` : ``}`">
         <Title :title="title" :idx="idx + 1" :show="showTitle"/>
         </div>
       </div>
       <div class="row" ref="rect">
-        <transition v-for="(item, i) in 5" :key="i">
+        <transition v-for="(item, i) in itemcount" :key="i">
           <div class="rect-container">
-            <div class="rect-outer" :style="`margin-top: ${i * 40}px`">
+            <div class="rect-outer" :style="`margin-top: ${40 * dir(i)}px`">
               <transition name="rect" appear>
               <div class="rect" v-show="showRect" :style="`transition-delay: ${i * .25}s`">
                 <div class="image"/>
@@ -56,7 +56,13 @@ export default {
     }
   },
   methods: {
-  
+    dir(i) {
+      if (this.idx % 2 === 0) {
+        return i;
+      } else {
+        return this.itemcount - i;
+      }
+    }
   },
   data() {
     return {
@@ -64,7 +70,8 @@ export default {
       showTitle: false,
       titlepos: null,
       showRect: false,
-      rectPos: null
+      rectPos: null,
+      itemcount: 5
     }
   },
   mounted() {
@@ -87,6 +94,7 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
 .row {
     display: flex;
     margin-top: -30vh;
+    vertical-align: bottom;
     flex-wrap: wrap;
 }
 .rect-container {
@@ -130,14 +138,14 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
     transform: translateY(0%);
 }
 .title-inner {
-  position: absolute;
+  // position: absolute;
   z-index: 3;
-  left: 50%;
-  transform: translateX(-50%);
+  // left: 50%;
+  // transform: translateX(-50%);
+  // padding-bottom: 20vh;
 }
 .title-wrap {
   position: relative;
-  height: 35vw;
   text-align: center;
 }
 .info {

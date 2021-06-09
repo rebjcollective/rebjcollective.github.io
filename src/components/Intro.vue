@@ -60,15 +60,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .intro {
-    height: 80vh;
+    height: 100vh;
     position: relative;
-    width: 80vw;
-    top: 10vh;
-    left: 10vw;
+    width: 100vw;
+    // top: 10vh;
+    // left: 10vw;
     overflow: hidden;
-    -webkit-box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.29); 
-box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.29);
-margin-bottom: 25vh;
+//     -webkit-box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.29); 
+// box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.29);
+// margin-bottom: 25vh;
 }
 .line {
   border-left: 1px solid white;
@@ -128,7 +128,7 @@ margin-bottom: 25vh;
 }
 .secondbg .img{
   height: 100%;
-  background-image: url("https://images.unsplash.com/photo-1500907789384-0c3b4c3bdce4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80");
+  background-image: url("../assets/test.jpg");
 }
 h1 {
   font-family: Arial;
@@ -141,6 +141,6 @@ h1 {
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: .5;
+  opacity: .75;
 }
 </style>

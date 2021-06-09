@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <div class="subtitle">
+    <div :class="`subtitle ${idx % 2 === 0 ? `left` : `right`}`">
       <h3>
         <p class="idx">{{idx}}</p>
         DARE TO MAKE A STATEMENT. BELIEVE IN YOURSELF.
@@ -9,7 +9,7 @@
       <h2 class="head" ref="title" v-if="word.length && show" :style="`font-size: ${fs(word.length)}px;`">
           <transition v-for="(item, i) in word" :key="i" appear name="title">
               <span class="box" :style="`display: inline-block; transition-delay:${i * .05}s;`">
-                <span :style="`transform: translateY(${i*8}%); display: inline-block;`">{{item}}</span>
+                <span :style="`transform: translateY(${i*8 * dir(idx)}%); display: inline-block;`">{{item}}</span>
               </span>
           </transition>
     </h2>
@@ -33,6 +33,13 @@ export default {
     }
   },
   methods: {
+    dir(idx) {
+      if (idx % 2 === 0) {
+        return -1;
+      } else {
+        return 1;
+      }
+    },
       titleArray(e) {
         this.word = e.split("");
       },
@@ -61,10 +68,10 @@ export default {
 
 $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
 h2 {
-    overflow: hidden;
+    // overflow: hidden;
     position: relative;
     white-space: nowrap;
-    height: 35vw;
+    // height: 35vw;
     font-weight: 100;
 }
 .idx {
@@ -86,13 +93,25 @@ h2 {
     transition: $transition;
 }
 .title {
-  height: 35vw;
+  // height: 35vw;
   width: 90vw;
+}
+.head {
+  // height: 0;
+}
+.right {
+  right: 0;
+  margin-right: 1em;
+  padding-top: 40px;
+}
+.left {
+  margin-top: -40px;
+  margin-left: 1em;
+  left: 0;
 }
 .subtitle {
   color: white;
   position: absolute;
-  right: 0;
   top: 0;
   width: 200px;
   text-align: left;

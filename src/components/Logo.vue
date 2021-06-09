@@ -34,7 +34,6 @@ export default {
 <style lang="scss" scoped>
 .logo svg{
   fill: white;
-  width: 80px;
-  margin-top: 20px;
+
 }
 </style>
