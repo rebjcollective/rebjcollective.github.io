@@ -6,22 +6,22 @@
         </div>
       </div>
       <div class="row" ref="rect">
-        <transition v-for="(item, i) in itemcount" :key="i">
+        <transition v-for="(item, i) in data.items" :key="i">
           <div class="rect-container">
             <div class="rect-outer" :ref="`rect-outer${i}`" :style="`margin-top: ${40 * dir(i)}px`">
               <transition name="rect" appear>
               <div class="rect" :ref="`rect${i}`">
                 <!-- v-show="showRect" -->
                 <!-- :style="`transition-delay: ${i * .25}s`" -->
-                <div class="image"/>
+                <div class="image" :style="`background-image: url(${item.main_image.url})`"/>
                 </div>
               </transition>
             </div>
                 <div class="info">
                   <transition name="rect" appear>
                       <div class="info-inner" :ref="`info${i}`">
-                        <p>Soft cotton tee, embroidered with tiger graphic and finished.</p>
-                        <p class="price">$40</p>
+                        <p>{{$cms.textField(item.description)}}</p>
+                        <p class="price">${{item.price_in_usd}} USD</p>
                       </div>
                   </transition>
                 </div>
@@ -34,7 +34,7 @@
 <script>
 import Title from './Title.vue'
 export default {
-  name: 'HalfScreenImage',
+  name: 'ProductCards',
   components: {
     Title
   },
@@ -59,7 +59,8 @@ export default {
     title: {
       type: String,
       default: "TOP 5"
-    }
+    },
+    data: Object
   },
   methods: {
     dir(i) {
@@ -84,12 +85,13 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
+     this.$nextTick(() => {
       this.titlepos = this.$refs.title.getBoundingClientRect().top - (window.innerHeight); 
       this.rectPos = (this.$refs.rect.getBoundingClientRect().top + this.$refs.rect.getBoundingClientRect().bottom) / 2;  
-          for (let i = 0; i < this.itemcount; i++) {
+          for (let i = 0; i < this.data.items.length; i++) {
             this.pos.push(this.$refs[`rect-outer${i}`][0].getBoundingClientRect().y - this.$refs[`rect-outer${i}`][0].getBoundingClientRect().height);
           }
-
+      })
     })
   }
 }
@@ -137,8 +139,8 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
   transform: translateY(0%);
 }
 .image {
-    background: url("../assets/test.jpg");
-    background-size: cover;
+    // background: url("../assets/test.jpg");
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     transform: scale(1);
