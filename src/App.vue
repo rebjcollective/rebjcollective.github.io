@@ -1,37 +1,34 @@
 <template>
   <div id="app" ref="app">
     <!-- <div ref="view" class="view"> -->
-    <PageMain :scrollPos="scrollPos" :scroll="scroll"/>
-    <Footerr ref="footer" class="footer"/>
+    <PageMain :scrollPos="scrollPos" :scroll="scroll" />
+    <!-- <Footerr ref="footer" class="footer"/> -->
     <!-- </div> -->
   </div>
 </template>
 
 <script>
 import PageMain from "./PageMain.vue";
-import Footerr from "./components/Footer.vue";
+// import Footerr from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
     PageMain,
-    Footerr,
-
+    // Footerr,
   },
   props: {
     scrollPos: {
       type: Number,
-      default: 0
+      default: 0,
     },
     scroll: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
-  mounted() {
-  },
-  methods: {
-  },
+  mounted() {},
+  methods: {},
   data() {
     return {
       sections: [
@@ -46,5 +43,4 @@ export default {
 
 <style lang="scss">
 @import "./main.scss";
-
 </style>
