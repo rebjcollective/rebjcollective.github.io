@@ -145,13 +145,21 @@ export default {
 $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
 
 .productcards {
-  // position: relative;
-  margin: 6em 4em;
   overflow: visible;
+  margin: 6em 1em;
+}
+@media screen and (min-width: 601px) {
+  .productcards {
+    // position: relative;
+    margin: 6em 4em;
+  }
+  .row {
+    margin-top: -30vh;
+  }
 }
 .row {
   display: flex;
-  margin-top: -30vh;
+
   vertical-align: bottom;
   flex-wrap: wrap;
   overflow: visible;
@@ -190,7 +198,7 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
   }
 }
 .rect-outer {
-  height: 30em;
+  height: 100vw;
   margin: 0 1em;
   overflow: hidden;
   &:hover {
@@ -199,6 +207,11 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
       transition: transform 1s ease;
       transform-origin: center;
     }
+  }
+}
+@media screen and (min-width: 601px) {
+  .rect-outer {
+    height: 30em;
   }
 }
 

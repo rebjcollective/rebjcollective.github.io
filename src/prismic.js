@@ -18,7 +18,7 @@ export default new (class Prismic {
           Vue.prototype.$header = res.results.filter(
             (i) => i.type === "header"
           )[0].data;
-          console.log(Vue.prototype.$header);
+          // console.log(Vue.prototype.$header);
           resolved();
         });
     });

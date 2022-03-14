@@ -72,7 +72,6 @@ export default {
   },
   mounted() {
     this.activeText = this.$cms.htmlField(this.$header.text_1);
-    console.log(this.$cms.htmlField(this.$header.text_2));
   },
 };
 </script>
@@ -105,7 +104,21 @@ export default {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 2;
-  padding: 2em;
+}
+.p-outer {
+  width: 100vw;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+}
+@media screen and (max-width: 600px) {
+  .intro-text {
+    width: 100%;
+  }
+  .p-outer {
+    overflow: visible;
+    height: auto;
+  }
 }
 .p-enter-to,
 .p-leave {
@@ -122,12 +135,7 @@ export default {
   transform: translateY(-100%);
   transition: transform 0.25s ease;
 }
-.p-outer {
-  width: 100vw;
-  height: 40px;
-  overflow: hidden;
-  position: relative;
-}
+
 .text {
   position: absolute;
   width: 100%;

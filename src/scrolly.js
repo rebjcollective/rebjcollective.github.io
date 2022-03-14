@@ -11,6 +11,7 @@ export default class Scrolly {
     this.scroll = this.scroll.bind(this);
     this.eventListeners();
     this.scroll();
+    this.prevTouch = 0;
   }
   deafen() {
     this.deaf = true;
@@ -32,6 +33,22 @@ export default class Scrolly {
 
       this.scrollTo = this.limit(this.scrollTo, this.max);
       e.stopPropagation();
+    });
+    window.addEventListener("touchstart", (e) => {
+      if (this.deaf) return;
+
+      this.prevTouch = e.touches[0].screenY;
+    });
+    window.addEventListener("touchmove", (e) => {
+      if (this.deaf) return;
+
+      if (this.prevTouch !== e.touches[0].screenY) {
+        this.nowTouch = e.touches[0].screenY;
+        this.scrollTo += this.prevTouch - this.nowTouch;
+        this.scrollTo = this.limit(this.scrollTo, this.max);
+        e.stopPropagation();
+      }
+      this.prevTouch = e.touches[0].screenY;
     });
   }
 

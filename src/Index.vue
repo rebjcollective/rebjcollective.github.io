@@ -33,30 +33,35 @@ export default {
   methods: {
     initScroll() {
       window.addEventListener("mousewheel", this.mouseScroll);
+      window.addEventListener("touchstart", (e) => {
+        this.prevTouch = e.touches[0].screenY;
+      });
+      window.addEventListener("touchmove", this.touchScroll);
+    },
+    touchScroll(e) {
+      if (this.prevTouch !== e.touches[0].screenY) {
+        this.nowTouch = e.touches[0].screenY;
+        this.scrollPos += this.prevTouch - this.nowTouch;
+        this.scrollPos = Math.max(this.scrollPos, 0);
+        if (this.scrollPos >= window.innerHeight) {
+          this.$refs.view.style = "height: auto";
+          this.scroll.listen();
+        } else if (this.scroll.pos <= window.innerHeight / 6) {
+          this.$refs.view.style = "height: 100vh";
+          this.scroll.deafen();
+        }
+        e.stopPropagation();
+      }
+      this.prevTouch = e.touches[0].screenY;
     },
     mouseScroll(e) {
-      // if (e.deltaY > 0) this.scrollPos += 1;
-      // else this.scrollPos -= 1;
       this.scrollPos += e.deltaY;
       this.scrollPos = Math.max(this.scrollPos, 0);
-      // console.log(this.scrollPos);
       if (this.scrollPos >= window.innerHeight) {
         this.$refs.view.style = "height: auto";
-        // this.$refs.footer.$el.style = "display: block;";
-
-        // this.$refs.logo.$el.style = `
-        //   width: 80px;
-        //   margin-top: 20px;
-        //   transform: translateX(-50%) translateY(0);
-        //   transition: margin-top 1s ease, width 1s ease;
-        // `;
         this.scroll.listen();
       } else if (this.scroll.pos <= window.innerHeight / 6) {
-        // this.$refs.logo.$el.style = `
-        //   width: 500px;
-        // `;
         this.$refs.view.style = "height: 100vh";
-        // this.$refs.footer.$el.style = "display: none;";
         this.scroll.deafen();
       }
     },
@@ -70,6 +75,8 @@ export default {
       ],
       scrollPos: 0,
       scroll: null,
+      prevTouch: 0,
+      nowTouch: 0,
     };
   },
 };
