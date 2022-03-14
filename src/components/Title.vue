@@ -97,7 +97,6 @@ export default {
   mounted() {
     this.titleArray(this.title);
     window.addEventListener("resize", () => {
-      console.log(this.$refs.title);
       var real = document.getElementsByClassName("real");
       var ghost = document.getElementsByClassName("ghost");
       for (let i = 0; i < real.length; i++) {

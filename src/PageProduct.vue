@@ -105,7 +105,7 @@ export default {
           .toLowerCase()
           .split(" ")
           // .join("-") === window.location.hash.split("/")[2]
-          .join("-") === window.location.pathname.split("/")[2]
+          .join("-") === window.location.pathname.split("/")[1]
       );
     },
     redirectToCheckout() {
@@ -145,18 +145,36 @@ img {
   border-radius: 20px;
   cursor: pointer;
 }
-.activeApparel {
-  // padding-top: 40px;
-  // min-height: 100vh;
+@media screen and (min-width: 601px) {
+  .activeApparel {
+    margin-top: 50vh;
+    transform: translateY(-50%);
+  }
+  .image,
+  .info {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+  }
+  .image {
+    width: 50%;
+    height: auto;
+  }
+  .info {
+    margin: 0 40px;
+    width: calc(50% - 80px);
+  }
 }
-.image,
-.info {
-  display: inline-block;
-  vertical-align: middle;
-  width: calc(50% - 40px);
-  text-align: left;
-  margin: 0 20px;
+@media screen and (max-width: 600px) {
+  .info {
+    width: calc(100% - 40px);
+    margin: 20px 20px 0;
+  }
+  .activeApparel {
+    padding-top: 100px;
+  }
 }
+
 .price {
   padding: 60px 0 60px;
   font-size: 20px;

@@ -15,6 +15,9 @@ export default class Scrolly {
   deafen() {
     this.deaf = true;
   }
+  resizeScreen() {
+    this.max = this.el.offsetHeight - window.innerHeight;
+  }
   listen() {
     this.deaf = false;
   }

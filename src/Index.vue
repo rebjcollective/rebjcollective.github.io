@@ -26,6 +26,9 @@ export default {
         }, 500);
       });
     });
+    window.addEventListener("resize", () => {
+      if (this.scroll) this.scroll.resizeScreen();
+    });
   },
   methods: {
     initScroll() {
