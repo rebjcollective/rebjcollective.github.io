@@ -128,8 +128,8 @@ export default {
 }
 body {
   margin: 0;
-  overscroll-behavior: none;
-  max-height: 100vh;
+  position: fixed;
+  overflow: hidden;
 }
 
 html,
