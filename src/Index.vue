@@ -129,6 +129,12 @@ export default {
 body {
   margin: 0;
   overscroll-behavior: none;
+  max-height: 100vh;
+}
+
+html,
+body {
+  overscroll-behavior-y: none;
 }
 
 .section {
