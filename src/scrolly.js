@@ -18,6 +18,9 @@ export default class Scrolly {
   listen() {
     this.deaf = false;
   }
+  scrollToTop() {
+    this.pos = 0;
+  }
   eventListeners() {
     window.addEventListener("mousewheel", (e) => {
       if (this.deaf) return;

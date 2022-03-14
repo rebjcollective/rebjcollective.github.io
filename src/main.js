@@ -1,14 +1,18 @@
 import Vue from "vue";
-import App from "./App.vue";
+import Index from "./Index.vue";
 // import printful from "./printful.js";
 import prismic from "./prismic.js";
+import stripe from "./stripe.js";
+import router from "./router.js";
 
 // printful.getData().then(() => {
 Vue.config.productionTip = false;
 prismic.getData().then(() => {
   new Vue({
-    render: (h) => h(App),
-  }).$mount("#app");
+    router,
+    stripe,
+    render: (h) => h(Index),
+  }).$mount("#index");
 });
 
 // });

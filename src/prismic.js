@@ -1,5 +1,6 @@
 import Vue from "vue";
 var PrismicDOM = require("prismic-dom");
+
 // import Vue from "vue";
 var p = require("@prismicio/client").default;
 export default new (class Prismic {
@@ -14,7 +15,10 @@ export default new (class Prismic {
           Vue.prototype.$apparel = res.results.filter(
             (i) => i.type === "apparel"
           )[0].data.body;
-          console.log(Vue.prototype.$apparel);
+          Vue.prototype.$header = res.results.filter(
+            (i) => i.type === "header"
+          )[0].data;
+          console.log(Vue.prototype.$header);
           resolved();
         });
     });
