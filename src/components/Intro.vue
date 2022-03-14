@@ -1,5 +1,5 @@
 <template>
-  <div class="intro">
+  <div id="intro">
     <div class="intro-text">
       <!-- <transition v-for="(item, i) in activeText" :key="i"> -->
       <div class="p-outer">
@@ -72,14 +72,22 @@ export default {
   },
   mounted() {
     this.activeText = this.$cms.htmlField(this.$header.text_1);
+    document.getElementById(
+      "intro"
+    ).style = `height: ${window.innerHeight}px; overflow: hidden;`;
+    document.getElementsByClassName(
+      "firstbg"
+    )[0].style = `height: ${window.innerHeight}px; overflow: hidden;`;
+    document.getElementsByClassName(
+      "secondbg"
+    )[0].style = `height: ${window.innerHeight}px; overflow: hidden;`;
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.intro {
-  height: 100vh;
+#intro {
   position: relative;
   width: 100vw;
   // top: 10vh;
