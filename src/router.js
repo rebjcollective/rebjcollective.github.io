@@ -7,11 +7,11 @@ Vue.use(VueRouter);
 
 // Initialize router
 const router = new VueRouter({
-  base: "/",
+  base: "",
   mode: "history",
   routes: [
     {
-      path: "/",
+      path: "",
       component: () => import("./App.vue"),
       name: "app",
     },
@@ -21,7 +21,7 @@ const router = new VueRouter({
       name: "Thankyou",
     },
     {
-      path: "/product/:slug?",
+      path: "/:slug?",
       component: () => import("./PageProduct.vue"),
       name: "pageproduct",
     },
