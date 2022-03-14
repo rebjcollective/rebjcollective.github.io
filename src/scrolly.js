@@ -44,7 +44,7 @@ export default class Scrolly {
 
       if (this.prevTouch !== e.touches[0].screenY) {
         this.nowTouch = e.touches[0].screenY;
-        this.scrollTo += this.prevTouch - this.nowTouch;
+        this.scrollTo += (this.prevTouch - this.nowTouch) * 2;
         this.scrollTo = this.limit(this.scrollTo, this.max);
         e.stopPropagation();
       }

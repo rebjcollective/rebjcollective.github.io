@@ -41,7 +41,7 @@ export default {
     touchScroll(e) {
       if (this.prevTouch !== e.touches[0].screenY) {
         this.nowTouch = e.touches[0].screenY;
-        this.scrollPos += this.prevTouch - this.nowTouch;
+        this.scrollPos += (this.prevTouch - this.nowTouch) * 2;
         this.scrollPos = Math.max(this.scrollPos, 0);
         if (this.scrollPos >= window.innerHeight) {
           this.$refs.view.style = "height: auto";
