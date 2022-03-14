@@ -47,7 +47,7 @@ export default {
           this.$refs.view.style = "height: auto";
           this.scroll.listen();
         } else if (this.scroll.pos <= window.innerHeight / 6) {
-          this.$refs.view.style = "height: 100vh";
+          this.$refs.view.style = `height: ${window.innerHeight}px`;
           this.scroll.deafen();
         }
         e.stopPropagation();
@@ -61,7 +61,7 @@ export default {
         this.$refs.view.style = "height: auto";
         this.scroll.listen();
       } else if (this.scroll.pos <= window.innerHeight / 6) {
-        this.$refs.view.style = "height: 100vh";
+        this.$refs.view.style = `height: ${window.innerHeight}px`;
         this.scroll.deafen();
       }
     },
