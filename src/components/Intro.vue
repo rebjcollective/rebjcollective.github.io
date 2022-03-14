@@ -77,10 +77,10 @@ export default {
     ).style = `height: ${window.innerHeight}px; overflow: hidden;`;
     document.getElementsByClassName(
       "firstbg"
-    )[0].style = `height: ${window.innerHeight}px; overflow: hidden;`;
+    )[0].style = `max-height: ${window.innerHeight}px;`;
     document.getElementsByClassName(
       "secondbg"
-    )[0].style = `height: ${window.innerHeight}px; overflow: hidden;`;
+    )[0].style = `max-height: ${window.innerHeight}px;`;
   },
 };
 </script>
