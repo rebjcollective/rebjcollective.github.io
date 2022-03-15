@@ -80,8 +80,9 @@ export default {
         }
       });
     });
-    console.log();
-
+    if (!this.activeApparel) {
+      window.location.href = "/";
+    }
     // this.activeApparel = this.$apparel[idx].items.filter((i) => {
     //   return (
     //     this.$cms

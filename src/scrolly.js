@@ -9,9 +9,23 @@ export default class Scrolly {
     this.max = this.el.offsetHeight - window.innerHeight;
     this.eventListeners = this.eventListeners.bind(this);
     this.scroll = this.scroll.bind(this);
+    this.prevTouch = 0;
+    this.device = null;
+
+    if (window.navigator.userAgent.includes("iPhone")) {
+      this.device = "mobile";
+    } else if (window.navigator.userAgent.includes("Android")) {
+      this.device = "mobile";
+    } else if (window.navigator.userAgent.includes("iPad")) {
+      this.device = "mobile";
+    } else if (window.navigator.userAgent.includes("Firefox")) {
+      this.device = "firefox";
+    } else {
+      this.device = "desktop";
+    }
+
     this.eventListeners();
     this.scroll();
-    this.prevTouch = 0;
   }
   deafen() {
     this.deaf = true;
@@ -26,30 +40,42 @@ export default class Scrolly {
     this.pos = 0;
   }
   eventListeners() {
-    window.addEventListener("mousewheel", (e) => {
-      if (this.deaf) return;
-      this.dir = Math.abs(e.deltaY) / e.deltaY;
-      this.scrollTo += e.deltaY;
+    if (this.device === "desktop") {
+      window.addEventListener("mousewheel", (e) => {
+        if (this.deaf) return;
+        this.dir = Math.abs(e.deltaY) / e.deltaY;
+        this.scrollTo += e.deltaY;
 
-      this.scrollTo = this.limit(this.scrollTo, this.max);
-      e.stopPropagation();
-    });
-    window.addEventListener("touchstart", (e) => {
-      if (this.deaf) return;
-
-      this.prevTouch = e.touches[0].screenY;
-    });
-    window.addEventListener("touchmove", (e) => {
-      if (this.deaf) return;
-
-      if (this.prevTouch !== e.touches[0].screenY) {
-        this.nowTouch = e.touches[0].screenY;
-        this.scrollTo += (this.prevTouch - this.nowTouch) * 2;
         this.scrollTo = this.limit(this.scrollTo, this.max);
         e.stopPropagation();
-      }
-      this.prevTouch = e.touches[0].screenY;
-    });
+      });
+    } else if (this.device === "mobile") {
+      window.addEventListener("touchstart", (e) => {
+        if (this.deaf) return;
+
+        this.prevTouch = e.touches[0].screenY;
+      });
+      window.addEventListener("touchmove", (e) => {
+        if (this.deaf) return;
+
+        if (this.prevTouch !== e.touches[0].screenY) {
+          this.nowTouch = e.touches[0].screenY;
+          this.scrollTo += (this.prevTouch - this.nowTouch) * 2;
+          this.scrollTo = this.limit(this.scrollTo, this.max);
+          e.stopPropagation();
+        }
+        this.prevTouch = e.touches[0].screenY;
+      });
+    } else {
+      window.addEventListener("wheel", (e) => {
+        if (this.deaf) return;
+        this.dir = Math.abs(e.deltaY) / e.deltaY;
+        this.scrollTo += e.deltaY;
+
+        this.scrollTo = this.limit(this.scrollTo, this.max);
+        e.stopPropagation();
+      });
+    }
   }
 
   scroll() {

@@ -1,6 +1,14 @@
 <template>
-  <div id="landing" ref="landing">
-   404
+  <div
+    id="landing"
+    ref="landing"
+    :style="
+      `background-image: url(${
+        $header.background_image.url ? $header.background_image.url : ''
+      })`
+    "
+  >
+    404
   </div>
 </template>
 
@@ -9,8 +17,7 @@ import Scrolly from "./scrolly.js";
 
 export default {
   name: "App",
-  components: {
-  },
+  components: {},
   mounted() {
     this.initScroll();
     this.$nextTick(() => {
@@ -77,7 +84,6 @@ body {
   background: $bg;
   height: 100vh;
   overflow: hidden;
-  background-image: url("./assets/Gritty.png");
 }
 .logo {
   position: fixed;

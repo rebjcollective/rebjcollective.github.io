@@ -1,5 +1,13 @@
 <template>
-  <div id="index" ref="index">
+  <div
+    id="index"
+    ref="index"
+    :style="
+      `background-image: url(${
+        $header.background_image.url ? $header.background_image.url : ''
+      })`
+    "
+  >
     <div ref="view" class="view">
       <router-view :scrollPos="scrollPos" :scroll="scroll"></router-view>
     </div>
@@ -32,11 +40,27 @@ export default {
   },
   methods: {
     initScroll() {
-      window.addEventListener("mousewheel", this.mouseScroll);
-      window.addEventListener("touchstart", (e) => {
-        this.prevTouch = e.touches[0].screenY;
-      });
-      window.addEventListener("touchmove", this.touchScroll);
+      if (window.navigator.userAgent.includes("iPhone")) {
+        this.device = "mobile";
+      } else if (window.navigator.userAgent.includes("Android")) {
+        this.device = "mobile";
+      } else if (window.navigator.userAgent.includes("iPad")) {
+        this.device = "mobile";
+      } else if (window.navigator.userAgent.includes("Firefox")) {
+        this.device = "firefox";
+      } else {
+        this.device = "desktop";
+      }
+      if (this.device === "desktop")
+        window.addEventListener("mousewheel", this.mouseScroll);
+      else if (this.device === "firefox")
+        window.addEventListener("wheel", this.mouseScroll);
+      else {
+        window.addEventListener("touchstart", (e) => {
+          this.prevTouch = e.touches[0].screenY;
+        });
+        window.addEventListener("touchmove", this.touchScroll);
+      }
     },
     touchScroll(e) {
       if (this.prevTouch !== e.touches[0].screenY) {
@@ -77,6 +101,7 @@ export default {
       scroll: null,
       prevTouch: 0,
       nowTouch: 0,
+      device: null,
     };
   },
 };
@@ -91,7 +116,6 @@ export default {
   background: $bg;
   height: 100vh;
   overflow: hidden;
-  background-image: url("./assets/Gritty.png");
 }
 .logo {
   position: fixed;
