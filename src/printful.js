@@ -26,8 +26,8 @@ export default new (class Printful {
           return res.data.result;
         })
         .then((data) => {
-          console.log(data);
-          res(data);
+          // console.log(data);
+          // res(data);
         });
     });
   }

@@ -16,9 +16,13 @@
     <div class="row" ref="rect">
       <transition v-for="(item, i) in data.items" :key="i">
         <div class="rect-container">
-          <!-- <a :href="`/product/${slugify($cms.textField(item.title))}`"> -->
+          <!-- <a :href="`/${slugify($cms.textField(item.title))}`"> -->
           <a
-            :href="$cms.textField(item.external_link)"
+            :href="
+              $cms.textField(item.external_link)
+                ? $cms.textField(item.external_link)
+                : `/${slugify($cms.textField(item.title))}`
+            "
             :target="item.open_link_in_new_tab ? `_blank` : ``"
           >
             <div

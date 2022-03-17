@@ -116,6 +116,7 @@ export default {
   background: $bg;
   height: 100vh;
   overflow: hidden;
+  min-width: 100vw;
 }
 .logo {
   position: fixed;
@@ -163,5 +164,8 @@ body {
 
 .section {
   position: relative;
+}
+a {
+  color: white;
 }
 </style>
