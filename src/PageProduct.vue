@@ -105,16 +105,20 @@ export default {
     //       .join("-") === window.location.pathname.split("/")[2]
     //   );
     // })[0];
-
-    this.lineItems.push({
-      price: this.active.code,
-      quantity: 1,
-    });
+    this.updateLineItems();
   },
   methods: {
+    updateLineItems() {
+      this.lineItems = [];
+      this.lineItems.push({
+        price: this.active.code,
+        quantity: 1,
+      });
+    },
     updateActiveVariation(i) {
       this.showInnerDropdown = false;
       this.active = this.stripeVariations[i];
+      this.updateLineItems();
     },
     initiateVariations() {
       this.stripeVariations = this.activeApparel.variations.map((i) => {
