@@ -203,6 +203,7 @@ img {
   .info {
     width: calc(100% - 40px);
     margin: 20px 20px 0;
+    padding-bottom: 25vh;
   }
   .activeApparel {
     padding-top: 100px;
@@ -265,6 +266,12 @@ h2 {
 .dropdown {
   width: 50%;
   position: relative;
+}
+@media screen and (max-width: 600px) {
+  .dropdown {
+    width: 100%;
+    position: relative;
+  }
 }
 #prompt {
   background: white;
