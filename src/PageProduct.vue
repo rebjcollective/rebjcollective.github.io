@@ -146,7 +146,7 @@ export default {
         "pk_live_51JM1YmDxKraVaJRFdHmNzBN64WLl7XRs1gnbnmF93AY3FkJ3HfjVw1zkuOeQqNb6w3CRRaCZHsIoxA9ocrExjvzZ00DUhY6uPf",
       lineItems: [],
       cancelURL: window.location.href,
-      landingUrl: "http://localhost:8080/thanks",
+      landingUrl: "http://collective.rebj.ca/thanks",
       showForm: false,
       stripeVariations: [],
       active: null,
