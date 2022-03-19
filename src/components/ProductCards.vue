@@ -19,11 +19,21 @@
           <!-- <a :href="`/${slugify($cms.textField(item.title))}`"> -->
           <a
             :href="
-              $cms.textField(item.external_link)
-                ? $cms.textField(item.external_link)
-                : `/${slugify($cms.textField(item.title))}`
+              $cms.textField(
+                data.items[data.items.length - 1 - i].external_link
+              )
+                ? $cms.textField(
+                    data.items[data.items.length - 1 - i].external_link
+                  )
+                : `/${slugify(
+                    $cms.textField(data.items[data.items.length - 1 - i].title)
+                  )}`
             "
-            :target="item.open_link_in_new_tab ? `_blank` : ``"
+            :target="
+              data.items[data.items.length - 1 - i].open_link_in_new_tab
+                ? `_blank`
+                : ``
+            "
           >
             <div
               class="rect-outer"
@@ -36,7 +46,11 @@
                   <!-- :style="`transition-delay: ${i * .25}s`" -->
                   <div
                     class="image"
-                    :style="`background-image: url(${item.main_image.url})`"
+                    :style="
+                      `background-image: url(${
+                        data.items[data.items.length - 1 - i].main_image.url
+                      })`
+                    "
                   />
                 </div>
               </transition>
@@ -44,12 +58,35 @@
             <div class="info">
               <transition name="rect" appear>
                 <div class="info-inner" :ref="`info${i}`">
-                  <p>{{ $cms.textField(item.title) }}</p>
+                  <p>
+                    {{
+                      $cms.textField(
+                        data.items[data.items.length - 1 - i].title
+                      )
+                    }}
+                  </p>
                   <p class="price">
-                    <span class="small" v-if="item.from">from </span>
-                    {{ item.currency.includes("$") ? "$" : ""
-                    }}{{ $cms.textField(item.price) }}
-                    <span class="small">{{ item.currency.split("$")[1] }}</span>
+                    <span
+                      class="small"
+                      v-if="data.items[data.items.length - 1 - i].from"
+                      >from
+                    </span>
+                    {{
+                      data.items[data.items.length - 1 - i].currency.includes(
+                        "$"
+                      )
+                        ? "$"
+                        : ""
+                    }}{{
+                      $cms.textField(
+                        data.items[data.items.length - 1 - i].price
+                      )
+                    }}
+                    <span class="small">{{
+                      data.items[data.items.length - 1 - i].currency.split(
+                        "$"
+                      )[1]
+                    }}</span>
                   </p>
                 </div>
               </transition>

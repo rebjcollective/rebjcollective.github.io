@@ -15,6 +15,7 @@ export default new (class Prismic {
           Vue.prototype.$apparel = res.results.filter(
             (i) => i.type === "apparel"
           )[0].data.body;
+
           Vue.prototype.$header = res.results.filter(
             (i) => i.type === "header"
           )[0].data;
