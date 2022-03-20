@@ -29,13 +29,13 @@ export default {
     this.$nextTick(() => {
       this.$nextTick(() => {
         setTimeout(() => {
-          this.initScroll();
           this.scroll = new Scrolly(this.$refs.index);
+          this.initScroll();
+          window.addEventListener("resize", () => {
+            if (this.scroll) this.scroll.resizeScreen();
+          });
         }, 500);
       });
-    });
-    window.addEventListener("resize", () => {
-      if (this.scroll) this.scroll.resizeScreen();
     });
   },
   methods: {

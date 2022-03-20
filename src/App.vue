@@ -2,20 +2,20 @@
   <div id="app" ref="app">
     <!-- <div ref="view" class="view"> -->
     <PageMain :scrollPos="scrollPos" :scroll="scroll" />
-    <!-- <Footerr ref="footer" class="footer"/> -->
+    <Footerr ref="footer" class="footer" />
     <!-- </div> -->
   </div>
 </template>
 
 <script>
 import PageMain from "./PageMain.vue";
-// import Footerr from "./components/Footer.vue";
+import Footerr from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
     PageMain,
-    // Footerr,
+    Footerr,
   },
   props: {
     scrollPos: {
