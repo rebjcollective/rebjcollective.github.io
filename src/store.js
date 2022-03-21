@@ -27,7 +27,10 @@ export default new Vuex.Store({
         // state.cart.find((i) => i.price === item.obj.price).quantity = item.qty;
       }
       // If quantity hits zero
-      if (state.cart.find((i) => i.price === item.obj.price).quantity <= 0) {
+      if (
+        state.cart.find((i) => i.price === item.obj.price).quantity <= 0 ||
+        isNaN(state.cart.find((i) => i.price === item.obj.price).quantity)
+      ) {
         var idx = state.cart.indexOf(item.obj);
         state.cart.splice(idx, 1);
       }
