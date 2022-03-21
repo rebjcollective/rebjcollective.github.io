@@ -13,6 +13,7 @@ import Footerr from "./components/Footer.vue";
 
 export default {
   name: "App",
+
   components: {
     PageMain,
     Footerr,

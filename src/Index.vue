@@ -11,34 +11,40 @@
     <div ref="view" class="view">
       <router-view :scrollPos="scrollPos" :scroll="scroll"></router-view>
     </div>
-    <a href="/"> <Logo class="logo" ref="logo"/></a>
+    <Header class="logo" ref="logo" />
   </div>
 </template>
 
 <script>
 import Scrolly from "./scrolly.js";
-import Logo from "./components/Logo.vue";
+import Header from "./components/Header.vue";
 
 export default {
   name: "App",
   components: {
-    Logo,
+    Header,
   },
-
+  // watch: {
+  //   $route: {
+  //   },
+  // },
   mounted() {
-    this.$nextTick(() => {
-      this.$nextTick(() => {
-        setTimeout(() => {
-          this.scroll = new Scrolly(this.$refs.index);
-          this.initScroll();
-          window.addEventListener("resize", () => {
-            if (this.scroll) this.scroll.resizeScreen();
-          });
-        }, 500);
-      });
-    });
+    this.startScroll();
   },
   methods: {
+    startScroll() {
+      this.$nextTick(() => {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.scroll = new Scrolly(this.$refs.index);
+            this.initScroll();
+            window.addEventListener("resize", () => {
+              if (this.scroll) this.scroll.resizeScreen();
+            });
+          }, 500);
+        });
+      });
+    },
     initScroll() {
       if (window.navigator.userAgent.includes("iPhone")) {
         this.device = "mobile";

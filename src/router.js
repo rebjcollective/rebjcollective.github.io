@@ -21,6 +21,11 @@ const router = new VueRouter({
       name: "Thankyou",
     },
     {
+      path: "/cart",
+      component: () => import("./PageCart.vue"),
+      name: "PageCart",
+    },
+    {
       path: "/:slug?",
       component: () => import("./PageProduct.vue"),
       name: "pageproduct",

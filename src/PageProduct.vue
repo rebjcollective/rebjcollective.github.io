@@ -33,6 +33,26 @@
           </div>
         </div>
 
+        <div class="dropdown qty">
+          <h3>Quantity</h3>
+          <div
+            id="prompt"
+            @click="showInnerDropdownQty = !showInnerDropdownQty"
+          >
+            <div :class="`chevron ${showInnerDropdownQty ? `up` : `down`}`">
+              ▼
+            </div>
+            <h4>
+              {{ qty }}
+            </h4>
+          </div>
+          <div class="inner" v-show="showInnerDropdownQty">
+            <p v-for="(item, i) in 19" :key="i" @click="updateQty(i + 1)">
+              {{ i + 1 }}
+            </p>
+          </div>
+        </div>
+
         <br />
         <!-- <h1 class="button" @click="showForm = true">Purchase</h1> -->
         <!-- <form v-if="showForm">
@@ -41,15 +61,18 @@
             <p>Please enter your email so we may send you a copy of your receipt</p>
             <input type="text" placeholder="Email"/><br/>
             </form> -->
+
+        <div class="addtocart button" @click="updateCart" v-if="active.code">
+          <h3>Add To Cart</h3>
+        </div>
         <div class="pay button" @click="redirectToCheckout" v-if="active.code">
-          <h1>Purchase</h1>
+          <h3>Buy Now</h3>
         </div>
 
         <StripeCheckout
-          v-if="lineItems.length && active.code"
-          :pk="key"
+          :pk="$key"
           mode="payment"
-          :lineItems="lineItems"
+          :lineItems="stripefriendlyCart()"
           :success-url="landingUrl"
           :cancel-url="cancelURL"
           ref="checkout"
@@ -67,6 +90,7 @@
 
 <script>
 import { StripeCheckout } from "@vue-stripe/vue-stripe";
+import { mapState } from "vuex";
 export default {
   props: {
     scrollPos: {
@@ -77,6 +101,9 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  computed: {
+    ...mapState(["cart", "cartQuantity"]),
   },
   name: "App",
   components: {
@@ -108,12 +135,36 @@ export default {
     this.updateLineItems();
   },
   methods: {
-    updateLineItems() {
-      this.lineItems = [];
-      this.lineItems.push({
-        price: this.active.code,
-        quantity: 1,
+    updateCart() {
+      this.$store.commit("addToCart", {
+        obj: this.lineItems[0],
+        qty: this.qty,
       });
+    },
+    updateQty(i) {
+      this.showInnerDropdownQty = false;
+      this.qty = i;
+      this.updateLineItems();
+    },
+    stripefriendlyCart() {
+      return this.lineItems.map(() => {
+        return {
+          price: this.active.code,
+          quantity: this.qty,
+        };
+      });
+    },
+    updateLineItems() {
+      this.lineItems = [
+        {
+          price: this.active.code,
+          quantity: this.qty,
+          img: this.activeApparel.main_image.url,
+          name: this.activeApparel.title,
+          cost: this.activeApparel.price,
+          variation: this.active.variation,
+        },
+      ];
     },
     updateActiveVariation(i) {
       this.showInnerDropdown = false;
@@ -145,9 +196,6 @@ export default {
   data() {
     return {
       activeApparel: null,
-      key:
-        // "pk_test_51JM1YmDxKraVaJRFOTA1AC1ZbIDnRHuisdjv55PXR3Gzo0DbKICWCVtpZv8je0XiGocwrJBVHRGCAqa3399R1Qtz00dX35mbKy"
-        "pk_live_51JM1YmDxKraVaJRFdHmNzBN64WLl7XRs1gnbnmF93AY3FkJ3HfjVw1zkuOeQqNb6w3CRRaCZHsIoxA9ocrExjvzZ00DUhY6uPf",
       lineItems: [],
       cancelURL: window.location.href,
       landingUrl: "http://collective.rebj.ca/thanks",
@@ -155,6 +203,8 @@ export default {
       stripeVariations: [],
       active: null,
       showInnerDropdown: false,
+      showInnerDropdownQty: false,
+      qty: 1,
       //   scrollPos: 0,
     };
   },
@@ -171,9 +221,19 @@ img {
 .button {
   color: black;
   background: white;
-  h1 {
+  h3 {
     color: black;
   }
+  &:hover {
+    background: grey;
+    transition: all 0.5s ease;
+    h3 {
+      color: white;
+      transition: all 0.5s ease;
+    }
+  }
+  transition: all 0.5s ease;
+
   display: inline-block;
   padding: 20px;
   border-radius: 20px;
@@ -247,11 +307,19 @@ h2 {
   margin-top: 20px;
 }
 
+.pay {
+  margin-left: 20px;
+  background: yellow;
+}
+
 .inner {
   position: absolute;
   width: 100%;
   padding: 10px 0;
   background: white;
+  overflow-y: scroll;
+  max-height: 100px;
+  z-index: 2;
   p {
     cursor: pointer;
     padding: 10px;
@@ -266,6 +334,7 @@ h2 {
 .dropdown {
   width: 50%;
   position: relative;
+  padding-bottom: 20px;
 }
 @media screen and (max-width: 600px) {
   .dropdown {

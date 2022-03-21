@@ -19,7 +19,7 @@ export default new (class Prismic {
           Vue.prototype.$footer = res.results.filter(
             (i) => i.type === "footer"
           )[0].data;
-          console.log(Vue.prototype.$footer);
+          // console.log(Vue.prototype.$footer);
 
           Vue.prototype.$header = res.results.filter(
             (i) => i.type === "header"
