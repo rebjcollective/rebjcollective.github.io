@@ -101,20 +101,12 @@ export default {
     StripeCheckout,
   },
   methods: {
-    // Plus 1
     redirectToCheckout() {
       this.$refs.checkout.redirectToCheckout();
     },
+    // Plus 1
     add(i) {
       this.$store.commit("addToCart", { obj: this.cart[i], qty: 1 });
-      console.log(
-        this.cart.map((i) => {
-          return {
-            price: i.price,
-            quantity: i.quantity,
-          };
-        })
-      );
     },
     // Subtract1
     subtract(i) {

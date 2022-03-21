@@ -169,6 +169,7 @@ export default {
           name: this.activeApparel.title,
           cost: this.activeApparel.price,
           variation: this.active.variation,
+          limit: this.activeApparel.stock,
         },
       ];
     },

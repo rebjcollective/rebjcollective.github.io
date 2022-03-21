@@ -20,11 +20,15 @@ export default new Vuex.Store({
         // If item IS already in cart, update the quantity
       } else {
         state.cart.find((i) => i.price === item.obj.price).quantity += item.qty;
+        state.cart.find((i) => i.price === item.obj.price).quantity = Math.min(
+          state.cart.find((i) => i.price === item.obj.price).quantity,
+          state.cart.find((i) => i.price === item.obj.price).limit
+        );
+        // state.cart.find((i) => i.price === item.obj.price).quantity = item.qty;
       }
       // If quantity hits zero
-      if (state.cart.find((i) => i.price === item.obj.price).quantity === 0) {
+      if (state.cart.find((i) => i.price === item.obj.price).quantity <= 0) {
         var idx = state.cart.indexOf(item.obj);
-        console.log(idx);
         state.cart.splice(idx, 1);
       }
       if (state.cart.length > 0) {
