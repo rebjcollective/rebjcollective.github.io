@@ -47,7 +47,13 @@
             </h4>
           </div>
           <div class="inner" v-show="showInnerDropdownQty">
-            <p v-for="(item, i) in 19" :key="i" @click="updateQty(i + 1)">
+            <p
+              v-for="(item, i) in activeApparel.stock
+                ? activeApparel.stock
+                : 20"
+              :key="i"
+              @click="updateQty(i + 1)"
+            >
               {{ i + 1 }}
             </p>
           </div>
