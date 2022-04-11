@@ -15,7 +15,7 @@
     </div>
     <div class="row" ref="rect">
       <transition v-for="(item, i) in data.items" :key="i">
-        <div class="rect-container">
+        <div class="rect-container" :style="checkIfInTestMode(i)">
           <!-- <a :href="`/${slugify($cms.textField(item.title))}`"> -->
           <a
             :href="
@@ -42,6 +42,13 @@
             >
               <transition name="rect" appear>
                 <div class="rect" :ref="`rect${i}`">
+                  <div
+                    class="outofstock"
+                    v-if="data.items[data.items.length - 1 - i].stock <= 0"
+                  >
+                    <p>Out Of Stock</p>
+                  </div>
+
                   <!-- v-show="showRect" -->
                   <!-- :style="`transition-delay: ${i * .25}s`" -->
                   <div
@@ -134,6 +141,21 @@ export default {
     data: Object,
   },
   methods: {
+    checkIfInTestMode(i) {
+      // when it comes to test object
+      if (
+        this.$cms.textField(
+          this.data.items[this.data.items.length - 1 - i].title
+        ) === "Test"
+      ) {
+        // if we are in test mode, show. if not, hide
+        if (this.$key.includes("test")) {
+          return `display: block`;
+        } else {
+          return `display: none`;
+        }
+      }
+    },
     dir(i) {
       if (this.idx % 2 === 0) {
         return i;
@@ -184,7 +206,38 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
-
+.outofstock {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  p {
+    text-transform: uppercase;
+    position: absolute;
+    color: black;
+    z-index: 3;
+    top: 50%;
+    text-align: center;
+    width: 100%;
+    transform: translateY(-50%) rotate(45deg);
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 30px;
+    padding: 20px 0;
+    font-family: Conglomerate;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: red;
+    z-index: 2;
+    opacity: 0.5;
+  }
+}
 .productcards {
   overflow: visible;
   margin: 6em 1em;
@@ -208,6 +261,7 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
 .rect-container {
   display: inline-block;
   min-width: 32%;
+  position: relative;
 }
 
 .info {
@@ -250,6 +304,7 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
     }
   }
 }
+
 @media screen and (min-width: 601px) {
   .rect-outer {
     height: 30em;
@@ -306,5 +361,10 @@ $transition: all 1000ms cubic-bezier(0.85, 0.005, 0.065, 1); /* custom */
 
 .small {
   font-size: 10px;
+}
+@media screen and (max-width: 800px) {
+  .rect-outer {
+    margin-top: 40px !important;
+  }
 }
 </style>

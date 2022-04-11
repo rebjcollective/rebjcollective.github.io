@@ -67,12 +67,20 @@
             <p>Please enter your email so we may send you a copy of your receipt</p>
             <input type="text" placeholder="Email"/><br/>
             </form> -->
-
-        <div class="addtocart button" @click="updateCart" v-if="active.code">
-          <h3>Add To Cart</h3>
+        <div class="payrow" v-if="lineItems[0].limit > 0">
+          <div class="addtocart button" @click="updateCart" v-if="active.code">
+            <h3>Add To Cart</h3>
+          </div>
+          <div
+            class="pay button"
+            @click="redirectToCheckout"
+            v-if="active.code"
+          >
+            <h3>Buy Now</h3>
+          </div>
         </div>
-        <div class="pay button" @click="redirectToCheckout" v-if="active.code">
-          <h3>Buy Now</h3>
+        <div class="soldout" v-else>
+          <h3>Sold Out!</h3>
         </div>
 
         <StripeCheckout
@@ -169,7 +177,7 @@ export default {
           name: this.activeApparel.title,
           cost: this.activeApparel.price,
           variation: this.active.variation,
-          limit: this.activeApparel.stock,
+          limit: this.activeApparel.stock ? this.activeApparel.stock : 0,
         },
       ];
     },
@@ -220,7 +228,12 @@ export default {
 
 <style lang="scss">
 @import "./main.scss";
-
+.soldout {
+  h3 {
+    color: red;
+    font-size: 40px;
+  }
+}
 img {
   width: 100%;
   text-align: left;

@@ -1,11 +1,11 @@
 <template>
   <div class="header">
     <a href="/"> <Logo class="logo" ref="logo"/></a>
-    <div class="cart">
+    <div :class="`cart ${animClass}`">
       <a href="/cart"
         ><i class="fa fa-shopping-cart" style="font-size:30px"></i>
-        <p class="cartqty">{{ cartQuantity }}</p></a
-      >
+        <p class="cartqty">{{ cartQuantity }}</p>
+      </a>
     </div>
   </div>
 </template>
@@ -21,11 +21,20 @@ export default {
   computed: {
     ...mapState(["cart", "cartQuantity"]),
   },
-  watch: {},
+  watch: {
+    cartQuantity() {
+      this.animClass = `animate`;
+      setTimeout(() => {
+        this.animClass = ``;
+      }, 500);
+    },
+  },
   props: {},
   methods: {},
   data() {
-    return {};
+    return {
+      animClass: ``,
+    };
   },
   mounted() {},
 };
@@ -60,5 +69,13 @@ a {
   width: auto;
   height: 10px;
   line-height: 0.75;
+}
+.cart {
+  transform: scale(1);
+  transition: all 0.5s ease-in-out;
+}
+.animate {
+  transform: scale(1.5);
+  transition: all 0.5s ease-in-out;
 }
 </style>

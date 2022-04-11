@@ -24,7 +24,6 @@ export default new Vuex.Store({
           state.cart.find((i) => i.price === item.obj.price).quantity,
           state.cart.find((i) => i.price === item.obj.price).limit
         );
-        // state.cart.find((i) => i.price === item.obj.price).quantity = item.qty;
       }
       // If quantity hits zero
       if (
