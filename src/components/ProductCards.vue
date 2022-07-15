@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="row" ref="rect">
-      <transition v-for="(item, i) in data.items" :key="i">
-        <div class="rect-container" :style="checkIfInTestMode(i)">
+      <transition v-for="(item, i) in data.items" :key="i + key">
+        <div class="rect-container" :style="checkIfInTestMode(i)" :key="key">
           <!-- <a :href="`/${slugify($cms.textField(item.title))}`"> -->
           <a
             :href="
@@ -113,6 +113,15 @@ export default {
     Title,
   },
   watch: {
+    // windowresizing: {
+    //   handler(e) {
+    //     console.log(e);
+    //     if (e <= 1000) {
+    //       this.key = "tablet";
+    //     }
+    //   },
+    //   deep:true
+    // },
     scrollPos(e) {
       if (e >= this.titlepos) {
         this.showTitle = true;
@@ -139,6 +148,10 @@ export default {
       default: "string",
     },
     data: Object,
+    windowresizing: {
+      type: Number,
+      default: 0
+    }
   },
   methods: {
     checkIfInTestMode(i) {
@@ -157,10 +170,18 @@ export default {
       }
     },
     dir(i) {
-      if (this.idx % 2 === 0) {
-        return i;
-      } else {
-        return this.itemcount - i;
+      if (window.innerWidth >= 1001) {
+        if (this.idx % 2 === 0) {
+          return i % 3;
+        } else {
+          return 2 - (i % 3);
+        }
+      } else if (window.innerWidth > 800 && window.innerWidth <= 1000) {
+        if (this.idx % 2 === 0) {
+          return i % 2;
+        } else {
+          return 1 - (i % 3);
+        }
       }
     },
     slugify(name) {
@@ -180,6 +201,8 @@ export default {
       itemcount: 5,
       pos: [],
       counter: 0,
+      key: "",
+      doOnce: false
     };
   },
   mounted() {

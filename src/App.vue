@@ -1,7 +1,7 @@
 <template>
   <div id="app" ref="app">
     <!-- <div ref="view" class="view"> -->
-    <PageMain :scrollPos="scrollPos" :scroll="scroll" />
+    <PageMain :scrollPos="scrollPos" :scroll="scroll" :windowresizing="windowresizing" />
     <Footerr ref="footer" class="footer" />
     <!-- </div> -->
   </div>
@@ -27,6 +27,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    windowresizing: {
+      type: Number,
+      default: 0
+    }
   },
   mounted() {},
   methods: {},

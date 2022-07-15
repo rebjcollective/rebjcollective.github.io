@@ -74,6 +74,8 @@
           <h3 @click="redirectToCheckout">Checkout</h3>
           <StripeCheckout
             :pk="$key"
+            :shippingAddressCollection="shippingAddresses"
+            billingAddressCollection="required"
             mode="payment"
             :lineItems="stripefriendlyCart()"
             :success-url="landingUrl"
@@ -139,6 +141,9 @@ export default {
     return {
       landingUrl: "http://collective.rebj.ca/thanks",
       cancelURL: window.location.href,
+      shippingAddresses: {
+        allowedCountries: ["CA", "US"],
+      },
     };
   },
   mounted() {},

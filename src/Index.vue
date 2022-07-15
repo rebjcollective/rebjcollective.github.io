@@ -9,7 +9,7 @@
     "
   >
     <div ref="view" class="view">
-      <router-view :scrollPos="scrollPos" :scroll="scroll"></router-view>
+      <router-view :scrollPos="scrollPos" :windowresizing="windowresizing" :scroll="scroll"></router-view>
     </div>
     <Header class="logo" ref="logo" />
   </div>
@@ -40,6 +40,7 @@ export default {
             this.initScroll();
             window.addEventListener("resize", () => {
               if (this.scroll) this.scroll.resizeScreen();
+              this.windowresizing = window.innerWidth;
             });
           }, 500);
         });
@@ -108,6 +109,7 @@ export default {
       prevTouch: 0,
       nowTouch: 0,
       device: null,
+      windowresizing: 0
     };
   },
 };

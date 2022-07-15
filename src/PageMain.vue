@@ -4,6 +4,7 @@
         <Intro :scrollPos="scrollPos" />
         <div class="section" v-for="(item, i) in $apparel" :key="i">
           <ProductCards
+            :windowresizing="windowresizing"
             :scrollPos="scroll ? scroll.pos : 0"
             :idx="i"
             :title="$cms.textField(item.primary.category)"
@@ -28,6 +29,10 @@ props: {
     scroll: {
         type: Object,
         default: ()=>{}
+    },
+    windowresizing: {
+      type: Number,
+      default: 0
     }
 },
   name: "App",
