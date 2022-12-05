@@ -20,29 +20,51 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import Email from "./smtp.js";
 export default {
   props: {
-    scrollPos: {
-      type: Number,
-      default: 0,
-    },
-    scroll: {
-      type: Number,
-      default: 0,
-    },
+
   },
   name: "App",
   components: {},
-  mounted() {},
+  mounted() {
+    
+    if (this.address.address.length > 0 &&
+        this.address.postalCode.length > 0 &&
+        this.address.province.length > 0 &&
+        this.address.country.length > 0) {
+          Email.send({
+            Host : "smtp.elasticemail.com",
+            Username : "rebjanec@gmail.com",
+            Password : process.env.VUE_APP_smtppass,
+            To : 'rebjanec@gmail.com',
+            From : "rebjanec@gmail.com",
+            Subject : "Shipping address from collective.rebj.ca",
+            Body : `
+              ${this.address.address}, 
+              ${this.address.postalCode},
+              ${this.address.province},
+              ${this.address.country}
+            `
+        });
+        
+        this.$store.commit("updateAddress", {
+          address:"",
+          postalCode:"",
+          province: "Ontario",
+          country:"Canada"
+        });
+
+      }
+  },
+  computed: {
+    ...mapState(["address"]),
+  },
   methods: {},
   data() {
     return {
-      sections: [
-        {
-          title: "BASICS",
-        },
-      ],
-      //   scrollPos: 0,
+
     };
   },
 };

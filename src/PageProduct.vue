@@ -60,6 +60,37 @@
         </div>
 
         <br />
+
+        <form class="addresses" @change="handleAddressChange" v-show="activeStates">
+          <h3>Shipping</h3>
+          <div class="row">
+            <label><p>Address</p></label>
+            <input required type="text" name="address" ref="address" :value="address.address"/>
+          </div>
+
+          <div class="row">
+          <label><p>Province</p></label>
+          <select required ref="states" :value="address.province" :key="address.country">
+            <option v-for="(item, i) in activeStates" :key="i">
+              {{item}}
+            </option>
+          </select>
+          </div>
+
+          <div class="row">
+          <label><p>Postal Code</p></label>
+          <input required type="text" name="postalcode" ref="postalcode" :value="address.postalCode"/>
+          </div>
+
+          <div class="row">
+          <label><p>Country</p></label>
+          <select required ref="country" :value="address.country">
+            <option v-for="(item, i) in countries" :key="i">
+              {{item}}
+            </option>
+          </select>
+          </div>
+      </form>
         <!-- <h1 class="button" @click="showForm = true">Purchase</h1> -->
         <!-- <form v-if="showForm">
             <p>Please enter your name.</p>
@@ -75,6 +106,7 @@
             class="pay button"
             @click="redirectToCheckout"
             v-if="active.code"
+            :style="!submitEnabled ? `pointer-events: none; background: lightgrey;` : ``"
           >
             <h3>Buy Now</h3>
           </div>
@@ -82,6 +114,7 @@
         <div class="soldout" v-else>
           <h3>Sold Out!</h3>
         </div>
+
 
         <StripeCheckout
           :pk="$key"
@@ -117,13 +150,19 @@ export default {
     },
   },
   computed: {
-    ...mapState(["cart", "cartQuantity"]),
+    ...mapState(["cart", "cartQuantity", "address"]),
   },
   name: "App",
   components: {
     StripeCheckout,
   },
+  watch: {
+ 
+  },
   mounted() {
+    this.submitEnabledChecker();
+
+    this.activeStates = this.address.country === "Canada" ? this.provinces : this.states;
     this.$apparel.forEach((i) => {
       i.items.forEach((j) => {
         if (this.checkSlug(this.$cms.textField(j.title))) {
@@ -149,6 +188,35 @@ export default {
     this.updateLineItems();
   },
   methods: {
+    handleAddressChange() {
+      
+        if (this.$refs.country.value === "Canada") {
+          this.activeStates = this.provinces;
+        } else {
+          this.activeStates = this.states;
+        }
+
+
+        this.$store.commit("updateAddress", {
+          address: this.$refs.address.value,
+          postalCode: this.$refs.postalcode.value,
+          province: this.$refs.states.value,
+          country: this.$refs.country.value
+        })
+        this.submitEnabledChecker();
+
+    },
+    submitEnabledChecker() {
+
+      if (this.address.address.length > 0 &&
+        this.address.postalCode.length > 0 &&
+        this.address.province.length > 0 &&
+        this.address.country.length > 0) {
+          this.submitEnabled = true;
+        } else {
+          this.submitEnabled = false;
+        }
+    },
     updateCart() {
       this.$store.commit("addToCart", {
         obj: this.lineItems[0],
@@ -205,6 +273,9 @@ export default {
       );
     },
     redirectToCheckout() {
+      if (!this.submitEnabled) {
+        return;
+      }
       this.$refs.checkout.redirectToCheckout();
     },
   },
@@ -220,6 +291,77 @@ export default {
       showInnerDropdown: false,
       showInnerDropdownQty: false,
       qty: 1,
+      submitEnabled: false,
+      provinces: [
+      'Alberta',
+      'British Columbia',
+      'Manitoba',
+      'New Brunswick',
+      'Newfoundland and Labrador',
+      'Northwest Territories',
+      'Nova Scotia',
+      'Nunavut',
+      'Ontario',
+      'Prince Edward Island',
+      'Quebec',
+      'Saskatchewan',
+      'Yukon'
+      ],
+      states: [
+      'Alabama',
+      'Alaska',
+      'Arizona',
+      'Arkansas',
+      'California',
+      'Colorado',
+      'Connecticut',
+      'Delaware',
+      'Florida',
+      'Georgia',
+      'Hawaii',
+      'Idaho',
+      'Illinois',
+      'Indiana',
+      'Iowa',
+      'Kansas',
+      'Kentucky',
+      'Louisiana',
+      'Maine',
+      'Maryland',
+      'Massachusetts',
+      'Michigan',
+      'Minnesota',
+      'Mississippi',
+      'Missouri',
+      'MontanaNebraska',
+      'Nevada',
+      'New Hampshire',
+      'New Jersey',
+      'New Mexico',
+      'New York',
+      'North Carolina',
+      'North Dakota',
+      'Ohio',
+      'Oklahoma',
+      'Oregon',
+      'PennsylvaniaRhode Island',
+      'South Carolina',
+      'South Dakota',
+      'Tennessee',
+      'Texas',
+      'Utah',
+      'Vermont',
+      'Virginia',
+      'Washington',
+      'West Virginia',
+      'Wisconsin',
+      'Wyoming',
+      ],
+      countries:[
+        'Canada',
+        'United States'
+      ],
+      activeStates: null
       //   scrollPos: 0,
     };
   },
@@ -228,6 +370,29 @@ export default {
 
 <style lang="scss">
 @import "./main.scss";
+.addresses {
+  margin-bottom: 20px;
+
+  h3 {
+    padding-bottom: 10px;
+  }
+  .row {
+    width: 50%;
+    display: inline-block;
+  }
+  margin-top: 20px;
+  input, select {
+    width: 80%;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    &:focus {
+      outline: none;
+    }
+    margin-bottom: 10px;
+
+  }
+}
 .soldout {
   h3 {
     color: red;
@@ -291,8 +456,8 @@ img {
 }
 
 .price {
-  padding: 60px 0 60px;
-  font-size: 20px;
+  padding: 20px 0 40px;
+  font-size: 30px;
 }
 .pageproduct {
   min-height: 100vh;
@@ -352,9 +517,12 @@ h2 {
   }
 }
 .dropdown {
-  width: 50%;
+  margin-right: 20px;
+  width: calc(50% - 20px);
   position: relative;
   padding-bottom: 20px;
+  display: inline-block;
+  
 }
 @media screen and (max-width: 600px) {
   .dropdown {

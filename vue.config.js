@@ -1,3 +1,4 @@
+process.env.VUE_APP_smtppass = '7E60DCF9A8D88591F309CA809A98E82864D9';
 module.exports = {
   // options...
   devServer: {

@@ -7,6 +7,12 @@ export default new Vuex.Store({
   state: {
     cart: [],
     cartQuantity: 0,
+    address:{
+      address:"",
+      postalCode:"",
+      province: "Ontario",
+      country:"Canada"
+    }
   },
 
   mutations: {
@@ -44,6 +50,9 @@ export default new Vuex.Store({
         .map((i) => i.quantity)
         .reduce((a, b) => a + b);
     },
+    updateAddress(state, address) {
+      state.address = address;
+    }
   },
 
   actions: {
